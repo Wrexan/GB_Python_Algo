@@ -29,10 +29,10 @@
 
 # -----------------------------------------------------------------------------
 #                                  Реализация
-import random
+
 import cProfile
 
-simples_limit = 100_000
+simples_limit = 10_000
 
 
 def zeroton_get(n):
