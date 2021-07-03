@@ -24,7 +24,7 @@ def list_hex_to_dec(_lst):
                 _d = hexadecs.index(_symbol)
             except ValueError:
                 print(f'Ошибка!: {_symbol} - не является шестнадцатиричной цифрой')
-                return None
+                return [0, 0]
             _number = _number * 16 + _d
         _result.append(_number)
     return _result
@@ -48,7 +48,6 @@ def calc_mul(_operands):
     a = 1
     for i in _operands:
         a *= i
-    print(a)
     return a
 
 
