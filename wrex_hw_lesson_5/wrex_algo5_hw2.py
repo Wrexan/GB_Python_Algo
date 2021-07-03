@@ -8,11 +8,9 @@
 
 # -----------------------------------------------------------------------------
 #                                     Данные
-# import collections
+import collections
 
-
-hexadecs = {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-            'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15, }
+hexadecs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
 
 
 # -----------------------------------------------------------------------------
@@ -22,8 +20,10 @@ def list_hex_to_dec(_lst):
     for _str in _lst:
         _number = 0
         for _symbol in _str:
-            _d = hexadecs.get(_symbol)
-            if not _d:
+            try:
+                _d = hexadecs.index(_symbol)
+            except ValueError:
+                print(f'Ошибка!: {_symbol} - не является шестнадцатиричной цифрой')
                 return None
             _number = _number * 16 + _d
         _result.append(_number)
@@ -31,15 +31,19 @@ def list_hex_to_dec(_lst):
 
 
 def list_dec_to_hex(_int):
-    return [*hex(_int).split('x')[-1].upper()]
+    # return [*hex(_int).split('x')[-1].upper()]
+    _result = collections.deque()
+    _hex = 0
+    _rest = 0
+    while _int > 0:
+        _rest = _int % 16
+        _result.appendleft(hexadecs[_rest])
+        _int = int(_int / 16)
+    return [*_result]
 
 
 # -----------------------------------------------------------------------------
 #                                     Вычисления
-def calc_sum(_operands):
-    return sum(_operands)
-
-
 def calc_mul(_operands):
     a = 1
     for i in _operands:
@@ -63,7 +67,7 @@ def main():
     operands = data_input()
     decs = list_hex_to_dec(operands)
     print(f'Были заданы числа: {operands}\n'
-          f'Результат сложения: {list_dec_to_hex(calc_sum(decs))}\n'
+          f'Результат сложения: {list_dec_to_hex(sum(decs))}\n'
           f'Результат перемножения: {list_dec_to_hex(calc_mul(decs))}')
 
 
