@@ -83,8 +83,10 @@ def bubble_sort_odd_even(array):
 def main():
     ra_1 = rnd(ra_size, ra_limin, ra_limax)
     ra_2 = rnd(ra_size, ra_limin, ra_limax)
-    print(merge_sort(ra_1))
-    print(bubble_sort_odd_even(ra_2))
+    print(f'merge: {ra_1}')
+    print(f'merge: {merge_sort(ra_1)}')
+    print(f'bubble: {ra_2}')
+    print(f'bubble: {bubble_sort_odd_even(ra_2)}')
 
 
 # -----------------------------------------------------------------------------
