@@ -64,7 +64,7 @@ def median_brute_search(array, delta_max):
 #                                      main func
 def main():
     ra_1 = rnd(ra_size, ra_limin, ra_limax)
-    print(f'array 1 (201): {ra_1}')
+    print(f'array 1 ({ra_size}): {ra_1}')
     print(f'median: {median_brute_search(ra_1, ra_limax - ra_limin)}')
 
     # ra_2 = rnd(100, ra_limin, ra_limax)
