@@ -7,81 +7,34 @@
 #
 # -----------------------------------------------------------------------------
 #                                     Данные
-import random
+import random as rand
+
+words_1 = ['Аист', 'Берёза', 'Вася', 'Годзилла', 'Дочка',
+           'Ёжик', 'Жена', 'Зёбра', 'Игнат', 'Кеша',
+           'Ласка', 'Мама', 'Носорог', 'Петя', 'Тётя']
+words_2 = ['атакует', 'баюкает', 'возит', 'гладит', 'готовит',
+           'зовёт', 'игнорит', 'любит', 'моет', 'мучает',
+           'кушает', 'пинает', 'ненавидит', 'приветствует', 'тащит']
+words_3 = ['атлетику', 'бобров', 'девочек', 'годзиллу', 'дурачка',
+           'ёжиков', 'жижу', 'занятия', 'забор', 'коров',
+           'пинки', 'раму', 'носорога', 'чуждое', 'хлам']
 
 
-word_1 = ['Аист', 'Берёза', 'Вася', 'Годзилла', 'Дочка',
-          'Ёжик', 'Жена', 'Зёбра', 'Игнат', 'Кеша',
-          'Ласка', 'Мама', 'Носорог', 'Петя', 'Тётя']
-word_2 = ['Аист', 'Берёза', 'Вася', 'Годзилла', 'Дочка',
-          'Ёжик', 'Жена', 'Зёбра', 'Игнат', 'Кеша',
-          'Ласка', 'Мама', 'Носорог', 'Петя', 'Тётя']
-word_3 = ['Аист', 'Берёза', 'Вася', 'Годзилла', 'Дочка',
-          'Ёжик', 'Жена', 'Зёбра', 'Игнат', 'Кеша',
-          'Ласка', 'Мама', 'Носорог', 'Петя', 'Тётя']
-
-
-def rnd(a: str, b: str, c: str):
-    return[a[random.randint(0, len(a))], ' ', b[random.randint(0, len(b))], ' ', c[random.randint(0, len(c))]]
+def rnd(a: list, b: list, c: list):
+    return ''.join([a[rand.randint(0, len(a)-1)], ' ', b[rand.randint(0, len(b)-1)], ' ', c[rand.randint(0, len(c)-1)]])
 
 
 # -----------------------------------------------------------------------------
 #                                    Генератор весов
-def get_weights(st: string):
-    symbols, weights, add = [], [], False
-    str_l = len(st)
-    for str_n in range(str_l):
-        for sn in range(len(symbols)):
-            if st[str_n] == symbols[sn]:
-                weights[sn] += 1
-                add = True
-                break
-        if not add:
-            symbols.append(st[str_n])
-            weights.append(1)
-            # print(f'{symbols=} {weights=}')
+def get_weights(st: str):
+    wt = {}
+    for s in st:
+        if s in wt:
+            wt[s] += 1
         else:
-            add = False
-    return symbols, weights
-
-
-# -----------------------------------------------------------------------------
-#                                    Упорядочивание
-def merge_sort(st: list, wt: list):
-    if len(wt) <= 1 or len(wt) != len(st):
-        return
-    left_w, right_w = wt[:len(wt) // 2], wt[len(wt) // 2:]
-    left_s, right_s = st[:len(st) // 2], st[len(st) // 2:]
-    # print(f'{left_s=} {left_w=} {right_s=} {right_w=}')
-    merge_sort(left_s, left_w)
-    merge_sort(right_s, right_w)
-    n = m = k = 0
-    center_w = [0] * (len(left_w) + len(right_w))
-    center_s = center_w.copy()
-    while n < len(left_w) and m < len(right_w):
-        if left_w[n] <= right_w[m]:
-            center_w[k] = left_w[n]
-            center_s[k] = left_s[n]
-            n += 1
-        else:
-            center_w[k] = right_w[m]
-            center_s[k] = right_s[m]
-            m += 1
-        k += 1
-    while n < len(left_w):
-        center_w[k] = left_w[n]
-        center_s[k] = left_s[n]
-        n += 1
-        k += 1
-    while m < len(right_w):
-        center_w[k] = right_w[m]
-        center_s[k] = right_s[m]
-        m += 1
-        k += 1
-    for i in range(len(wt)):
-        wt[i] = center_w[i]
-        st[i] = center_s[i]
-    return st, wt
+            wt[s] = 1
+    wt = sorted(wt.items(), key=lambda x: x[1])
+    return wt
 
 
 # -----------------------------------------------------------------------------
@@ -91,13 +44,12 @@ def merge_sort(st: list, wt: list):
 
 # -----------------------------------------------------------------------------
 #                                      main func
-def main(st: string):
-    s_list, w_list = get_weights(st)
-    print(f'{s_list=} {w_list=}')
-    s_list, w_list = merge_sort(s_list, w_list)
-    print(f'{s_list=} {w_list=}')
+def main(st: str):
+    print(f'{st=}')
+    w_dict = get_weights(st)
+    print(f'{w_dict=} ')
 
 
 # -----------------------------------------------------------------------------
 #
-main(string)
+main(rnd(words_1, words_2, words_3))
